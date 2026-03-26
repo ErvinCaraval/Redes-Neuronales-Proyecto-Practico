@@ -168,6 +168,50 @@ jupyter notebook
 
 ---
 
+##  9. Estrategias y parámetros de entrenamiento (Resumen solicitado)
+
+### Notebook `Entrega_1_MLP_vs_DeepLearning.ipynb`
+- Dataset: `dataset/train`, `dataset/val`, `dataset/test` (10 clases)
+- Tamaño de imagen: 128x128 para ambas arquitecturas
+- MLP:
+  - Entrada: vector aplanado de 128x128x3 = 49.152 features
+  - Capas: Dense(256)->BatchNorm->Dropout(0.4), Dense(128)->BatchNorm->Dropout(0.3), Dense(64)->Dropout(0.3), Softmax(10)
+  - Optimizer: Adam lr=0.001
+  - Loss: categorical_crossentropy
+  - Batch size: 32
+  - Epochs: max 25 + EarlyStopping(patience=10, restore_best_weights=True)
+  - Callbacks: EarlyStopping, ReduceLROnPlateau(factor=0.5, patience=4, min_lr=1e-7), ModelCheckpoint('mlp_best_model.keras')
+  - Regularización: dropout + batch normalization + reducción de arquitectura
+- EfficientNetB0 (cargado o entrenado desde `entrenamiento_efficientnet.ipynb`):
+  - Base sin top con pesos ImageNet, `base_model.trainable=False`
+  - Capas adicionales: GlobalAveragePooling2D, Dense(128, relu), Dropout(0.5), Dense(10 softmax)
+  - Optimizer: Adam (default)
+  - Loss: categorical_crossentropy
+  - Epochs: 5
+  - Batch size: 32
+  - Preprocesamiento: `preprocess_input` + augmentation en train (flip horiz/vert, rotación 30, brillo 0.8-1.2, zoom 0.1)
+  - Validación/Test sin augmentación
+- Métricas evaluadas:
+  - accuracy, precision, recall, f1-score, confusion matrix, classification report
+
+### Notebook `entrenamiento_efficientnet.ipynb`
+- Parámetros globales:
+  - IMG_SIZE=128, BATCH_SIZE=32, EPOCHS=5, NUM_CLASSES=10
+- Arquitectura y transfer learning:
+  - EfficientNetB0 preentrenado (imagenet), top excluido, base congelada
+  - Añade pooling + Dense(128) + Dropout(0.5) + Dense(10 softmax)
+- Entrenamiento directos:
+  - history = model.fit(train_generator, validation_data=val_generator, epochs=EPOCHS)
+- Salida: modelo guardado en `modelo_EfficientNetB0.keras`
+
+### Estrategias generales aplicadas (en ambos notebooks)
+- Reducción de tamaño de imagen para memoria y velocidad.
+- Aumento de datos en entrenamiento del modelo DL para robustez.
+- Early stopping y learning rate dinámico en MLP para evitar overfitting.
+- Almacenamiento del mejor modelo y calculo de métricas robustas para comparación.
+
+---
+
 ##  Troubleshooting (Solución de Problemas)
 
 ###  Error: `python: command not found`
