@@ -19,7 +19,7 @@ Thumbs.db
 
 # Modelos grandes (se generan durante ejecución)
 *.h5
-
+*.keras
 # Logs (en outputs)
 outputs/logs/
 
