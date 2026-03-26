@@ -3,9 +3,9 @@
 ##  Descripción del Proyecto
 
 Clasificación de enfermedades de caña de azúcar utilizando:
-- **MLP (Perceptrón Multicapa)**: Red neuronal tradicional con 234M parámetros
-- **Deep Learning (EfficientNetB0)**: Transfer Learning con pesos pre-entrenados en ImageNet
-- **Comparación de Desempeño**: Métricas, visualizaciones y análisis crítico
+- **MLP (Perceptrón Multicapa)**: Arquitectura profunda optimizada (~25.6M parámetros).
+- **Deep Learning (EfficientNetB0)**: Transfer Learning con pesos pre-entrenados en ImageNet.
+- **Comparación de Desempeño**: Evaluación exhaustiva mediante métricas y matrices de confusión.
 
 **Clases**: 10 enfermedades del caña de azúcar (Carbon, Roya, Sanas, Secas, etc.)
 
@@ -24,8 +24,9 @@ Clasificación de enfermedades de caña de azúcar utilizando:
 
 ```
 Redes-Neuronales-Proyecto-Practico/
-├── Entrega_1_MLP_vs_DeepLearning.ipynb       # Notebook principal
+├── Entrega_1_MLP_vs_DeepLearning.ipynb       # Entrenamiento de MLP
 ├── entrenamiento_efficientnet.ipynb           # Entrenamiento de EfficientNetB0
+├── comparacion_modelos_corregido.ipynb        # Comparativa y evaluación final
 ├── dividir_datos.py                           # Script para dividir dataset
 ├── requirements.txt                           # Dependencias del proyecto
 ├── README.md                                  # Este archivo
@@ -151,20 +152,21 @@ jupyter notebook
 
 ##  Cómo Ejecutar los Notebooks
 
-### **Ejecutar Entrega 1**
+### **Guía de Ejecución**
 
-1. Con Jupyter abierto, abre `Entrega_1_MLP_vs_DeepLearning.ipynb`
-2. Ejecuta las celdas **en orden** (Shift + Enter o botón ▶ Play)
-3. **Tiempo estimado**: ~35 minutos (primera vez), ~20 minutos (sin entrenar)
+1. **Entrenamiento MLP**: Abrir `Entrega_1_MLP_vs_DeepLearning.ipynb` y ejecutar las celdas para entrenar el modelo optimizado.
+2. **Entrenamiento EfficientNet**: Abrir `entrenamiento_efficientnet.ipynb` para el modelo de Deep Learning.
+3. **Comparativa Final**: Ejecutar `comparacion_modelos_corregido.ipynb` para generar el análisis comparativo detallado.
 
-### **Puntos Críticos de Ejecución**
+> [!TIP]
+> Los modelos se han configurado con `tf.data.Dataset` para asegurar la compatibilidad con sistemas con RAM limitada, cargando las imágenes desde disco de forma eficiente.
 
-| Celda | Operación | Tiempo |
-|-------|-----------|--------|
-| 1-4 | Imports y carga de datos | ~3 min |
-| 5-6 | Entrenamiento MLP | ~10 min |
-| 7 | Carga/Entrenamiento EfficientNetB0 | ~15 min (si no existe modelo) |
-| 8-14 | Evaluación y análisis | ~2 min |
+### **Rendimiento Obtenido**
+
+| Modelo | Accuracy | Precisión | Recall | F1-Score |
+|--------|----------|-----------|--------|----------|
+| **MLP (Optimizado)** | ~66.6% | 66.9% | 66.6% | 66.5% |
+| **EfficientNetB0** | ~87.9% | 88.4% | 87.9% | 87.9% |
 
 ---
 
@@ -235,22 +237,12 @@ python3 -m venv venv
 
 ---
 
-##  Verificación Final
+##  Verificación de Entorno y GPU
 
-Una vez configurado, ejecuta esto para confirmar que todo funciona:
+Para asegurar el rendimiento óptimo (especialmente en Colab), verifica la disponibilidad de GPU:
 
 ```bash
-python << 'EOF'
-import tensorflow as tf
-import numpy as np
-import matplotlib.pyplot as plt
-import jupyter
-
-print("✓ TensorFlow:", tf.__version__)
-print("✓ NumPy:", np.__version__)
-print("✓ Jupyter instalado")
-print("\n Entorno listo para ejecutar notebooks")
-EOF
+python -c "import tensorflow as tf; print('Aceleración GPU:', 'Disponible' if tf.config.list_physical_devices('GPU') else 'No detectada')"
 ```
 
 ---
@@ -260,8 +252,8 @@ EOF
 Al ejecutar `Entrega_1_MLP_vs_DeepLearning.ipynb`:
 
 ### **Modelos (Raíz del Proyecto)**
-- `modelo_EfficientNetB0.keras` - Modelo de Deep Learning entrenado (~50MB)
-- `mlp_best_model.keras` - Mejor modelo MLP guardado por Early Stopping (~200MB)
+- `modelo_EfficientNetB0.keras` - Modelo de Deep Learning entrenado (~19MB)
+- `mlp_best_model.keras` - Mejor modelo MLP optimizado (~294MB)
 
 ### **Gráficas Generadas (outputs/graphics/)**
 1. **mlp_early_stopping_effect.png** - Visualización del efecto de Early Stopping
@@ -318,8 +310,8 @@ Al ejecutar `Entrega_1_MLP_vs_DeepLearning.ipynb`:
 
 | Archivo | Ubicación | Tamaño | Descripción |
 |---------|-----------|--------|------------|
-| modelo_EfficientNetB0.keras | Raíz | ~50MB | Modelo DL pre-entrenado |
-| mlp_best_model.keras | Raíz | ~200MB | Mejor modelo MLP (Early Stop) |
+| modelo_EfficientNetB0.keras | Raíz | ~19MB | Modelo DL pre-entrenado |
+| mlp_best_model.keras | Raíz | ~294MB | Mejor modelo MLP (Optimizado) |
 | mlp_early_stopping_effect.png | outputs/graphics/ | ~500KB | Gráfica Early Stopping |
 | comparacion_metricas.png | outputs/graphics/ | ~800KB | Comparación MLP vs DL |
 | metricas_por_clase.png | outputs/graphics/ | ~600KB | Análisis por clase |
