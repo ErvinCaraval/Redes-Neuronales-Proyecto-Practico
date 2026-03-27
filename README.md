@@ -7,7 +7,7 @@ Clasificación de enfermedades de caña de azúcar utilizando:
 - **Deep Learning (EfficientNetB0)**: Transfer Learning con pesos pre-entrenados en ImageNet.
 - **Comparación de Desempeño**: Evaluación exhaustiva mediante métricas y matrices de confusión.
 
-**Clases**: 10 enfermedades del caña de azúcar (Carbon, Roya, Sanas, Secas, etc.)
+**Clases**: 10 enfermedades del caña de azúcar (Carbon, Roya, Sanas, Secas, etc.).
 
 ---
 
