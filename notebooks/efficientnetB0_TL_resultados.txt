@@ -1,0 +1,22 @@
+Modelo        : efficientnetB0_TL
+Test Accuracy : 0.9749
+Test Loss     : 0.0792
+F1 Score      : 0.9748
+
+--- Reporte de clasificación ---
+                  precision    recall  f1-score   support
+
+          carbon     1.0000    1.0000    1.0000        75
+   hoja_amarilla     0.9615    1.0000    0.9804       150
+   mancha_anillo     1.0000    1.0000    1.0000       105
+    mancha_parda     0.9669    0.9733    0.9701       150
+         mosaico     0.9789    0.9267    0.9521       150
+     muermo_rojo     0.9542    0.9733    0.9637       150
+            roya     0.9733    0.9733    0.9733       150
+           sanas     0.9608    0.9800    0.9703       150
+           secas     1.0000    0.9535    0.9762        43
+tizon_bacteriano     0.9932    0.9733    0.9832       150
+
+        accuracy                         0.9749      1273
+       macro avg     0.9789    0.9753    0.9769      1273
+    weighted avg     0.9751    0.9749    0.9748      1273
